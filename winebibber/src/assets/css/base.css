@@ -1,0 +1,141 @@
+html,body{
+  padding:0;
+  margin:0;
+  height:100%;
+  font-size:.18rem;
+  font-family: "微软雅黑";
+  background-color: #f3f5f6;
+}
+p,div,h1,h2,h3,h4,h5,h6,ul,li,menu{
+	padding:0;
+    margin:0;
+}
+ul,li{
+	list-style: none
+}
+
+
+
+/*公共样式*/
+.l{
+	float:left;
+}
+.r{
+	float:right;
+}
+
+.pdS_com{
+  padding:0 .16rem;
+}
+.pdS_com2{
+  padding:.16rem;
+}
+.pdS_com3{
+  padding:.16rem 0;
+}
+
+.mgS_com{
+  margin:0 .16rem;
+}
+
+.clearfix:after {
+    clear: both;
+    display: block;
+    content: "...";
+    visibility: hidden;
+    height: 0;
+    font-size: 0;
+}
+
+
+
+
+
+/*公共背景颜色*/
+.bgcolorG{
+	background-color: #f1f1f1;
+}
+.bgcolorM{
+	background-color: #2e2e2e;
+}
+.bgcolorR{
+	background-color:#e62929
+}
+.bgcolorW{
+	background-color: #ffffff;
+}
+
+.bgcolorDG{
+	background-color:#858585;
+}
+.bgcolorTagO{
+	background-color:#ffa855;
+}
+.bgcolorTagP{
+	background-color:#c58cff;
+}
+.bgcolorTagB{
+	background-color:#87aef1;
+}
+.bgcolorTagR{
+	background-color:#ff6266
+}
+
+
+/*公共字体颜色*/
+.ftcolorR{
+	color:#fc5a5a;
+}
+.ftcolorW{
+	color:#ffffff;
+}
+.ftcolorG{
+	color:#666;
+}
+
+.ftcolorGL{
+	color:#999;
+}
+
+.ftcolorGD{
+	color: #252525;
+}
+
+/*插件的样式修改----------swiper*/
+
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+  left:3.6rem !important;
+  width:50% !important;
+  bottom:6px !important;
+}
+.swiper-pagination-bullet{
+	width:6px !important;
+	height:6px !important;
+}
+.swiper-pagination-bullet{
+  background: #ffffff !important;
+  opacity:.6 !important;
+}
+.swiper-pagination-bullet-active{
+   background:#ffffff !important;
+    opacity:1 !important;
+}
+
+.swiper-container{
+	margin:0 0 !important;
+}
+
+#in_seckill_swiper .swiper-slide{
+	margin-right:10px !important;
+}
+
+#in_bigAD_block_swiper1 .swiper-slide{
+	margin-right:5px !important;
+}
+#in_bigAD_block_swiper1 .swiper-slide{
+	width:2.48rem !important;
+}
+#block_swiper .swiper-slide{
+	width:1rem !important;
+    margin-right:15px !important;
+}
