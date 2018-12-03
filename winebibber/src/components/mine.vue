@@ -1,6 +1,6 @@
 <template>
   <div class="mine">
-      <h1>这是我的页面</h1>
+       <common-header title="用户登录" :isCar=false></common-header>
   </div>
 </template>
 
@@ -14,7 +14,6 @@ export default {
     },
     mounted(){
     	this.$store.state.showNavFlag = false
-       console.log(this.$store.state.showNavFlag)
     },
 }
 </script>

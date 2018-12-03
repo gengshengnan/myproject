@@ -2,51 +2,15 @@
   <div class="com_list">
       <div class="com_list_title bgcolorW"><span class="ftcolorG">爆款推荐</span></div>
       <div class="clearfix">
-            <div class="com_list_items bgcolorW l">
+            <div class="com_list_items bgcolorW l" v-for="item in recommentList">
                 <div class="com_list_item">
                       <div class="tagList">
-                         <span class="bgcolorTagO ftcolorW">冰点价</span><span class="bgcolorTagP ftcolorW">满减</span>
+                         <span v-for="val in item.promo" class="ftcolorW" :style="{backgroundColor: val.backColor}" v-text="val.name"></span>
                       </div>
                       <div class="com_list_desc">
-                          <img src="https://img07.jiuxian.com/2018/1120/f5676abf2ed04d89b5b895f4381f99ea4.jpg"/>
-                          <p class="name ftcolorGD">【下单立减120】53°贵州茅台酒厂（集团）技术开发公司国隆酱酒500ml（2016-2017）</p>
-                          <p class="price ftcolorR">￥123</p>
-                      </div>
-                </div>
-            </div>
-           <div class="com_list_items bgcolorW l">
-                <div class="com_list_item">
-                      <div class="tagList">
-                         <span class="bgcolorTagO ftcolorW">冰点价</span><span class="bgcolorTagP ftcolorW">满减</span>
-                      </div>
-                      <div class="com_list_desc">
-                          <img src="https://img07.jiuxian.com/2018/0224/ffef0e6533c745a290983c1d8fe2f69a4.jpg"/>
-                          <p class="name ftcolorGD">法国(原瓶进口)法圣古堡圣威骑士干红葡萄酒750ml(6瓶装)</p>
-                          <p class="price ftcolorR">￥123</p>
-                      </div>
-                </div>
-            </div>
-            <div class="com_list_items bgcolorW l">
-                <div class="com_list_item">
-                      <div class="tagList">
-                         <span class="bgcolorTagO ftcolorW">冰点价</span><span class="bgcolorTagP ftcolorW">满减</span>
-                      </div>
-                      <div class="com_list_desc">
-                          <img src="https://img08.jiuxian.com/2018/1122/74e79624f58e4195ac217def2886a60e4.jpg"/>
-                          <p class="name ftcolorGD">【新品首发】52度泸州老窖2019农历己亥年新春礼酒/惟尊1.199L</p>
-                          <p class="price ftcolorR">￥123</p>
-                      </div>
-                </div>
-            </div>
-            <div class="com_list_items bgcolorW l">
-                <div class="com_list_item">
-                      <div class="tagList">
-                         <span class="bgcolorTagO ftcolorW">冰点价</span><span class="bgcolorTagP ftcolorW">满减</span>
-                      </div>
-                      <div class="com_list_desc">
-                          <img src="https://img09.jiuxian.com/2017/0822/78c0b66acb7a4707aedb70de47000a814.jpg"/>
-                          <p class="name ftcolorGD">52°酒鬼原浆酒500ml</p>
-                          <p class="price ftcolorR">￥123</p>
+                          <img :src="item.commonProductInfo.imgPath"/>
+                          <p class="name ftcolorGD" v-text="item.commonProductInfo.pname"></p>
+                          <p class="price ftcolorR">￥<span v-text="item.commonProductInfo.jxPrice"></span></p>
                       </div>
                 </div>
             </div>
@@ -55,16 +19,30 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'componentList',
   data () {
     return {
-     /* msg: 'Welcome to Your Vue.js App'*/
+      recommentList:[]
     }
   },
-   mounted(){
-
+  mounted(){
+    this.getRecomList()
+  },
+  methods:{
+    getRecomList:function(){
+      var that = this
+      axios.get('/m_v1/statics/getzx.htm?topicId=1165&pageNum=1')
+        .then(function (response) {
+          console.log(response)
+          that.recommentList =response.data.promoList
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="index" id="index_con">
       <!-- 广告位 -->
       <div class="in_ad bgcolorM clearfix" v-if="showAdFlag">
           <div class="in_close l" @click="closeOpt()"><i></i></div>
@@ -18,7 +18,6 @@
               <span class="ftcolorG">【古井贡/黄鹤楼特卖 】：全场低至39元！</span>
            </div>
       </div>
-
       <!-- swiper -->
       <transition name="fade">
           <div class="swiper-container" id="in_swiper">
@@ -82,44 +81,12 @@
            </div>
           <div class="swiper-container" id="in_seckill_swiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide">
+              <div class="swiper-slide" v-for="item in killProList">
                 <a>
-                   <img src="https://img08.jiuxian.com/2017/0110/902babce85394325b90be604fd0963854.jpg"/>
-                   <p class="secskill_name ftcolorGD">40°英国芝华士威士忌500ml+50ml品酒礼包</p>
-                   <p class="seckill_price ftcolorR">￥120</p>
-                   <p class="seckill_kill_price ftcolorGL">￥110</p>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a>
-                   <img src="https://img08.jiuxian.com/2017/0110/902babce85394325b90be604fd0963854.jpg"/>
-                   <p class="secskill_name ftcolorGD">40°英国芝华士威士忌500ml+50ml品酒礼包</p>
-                   <p class="seckill_price ftcolorR">￥120</p>
-                   <p class="seckill_kill_price ftcolorGL">￥110</p>
-                </a>
-              </div> 
-              <div class="swiper-slide">
-                <a>
-                   <img src="https://img08.jiuxian.com/2017/0110/902babce85394325b90be604fd0963854.jpg"/>
-                   <p class="secskill_name ftcolorGD">40°英国芝华士威士忌500ml+50ml品酒礼包</p>
-                   <p class="seckill_price ftcolorR">￥120</p>
-                   <p class="seckill_kill_price ftcolorGL">￥110</p>
-                </a>
-              </div>
-               <div class="swiper-slide">
-                <a>
-                   <img src="https://img08.jiuxian.com/2017/0110/902babce85394325b90be604fd0963854.jpg"/>
-                   <p class="secskill_name ftcolorGD">40°英国芝华士威士忌500ml+50ml品酒礼包</p>
-                   <p class="seckill_price ftcolorR">￥120</p>
-                   <p class="seckill_kill_price ftcolorGL">￥110</p>
-                </a>
-              </div>
-               <div class="swiper-slide">
-                <a>
-                   <img src="https://img08.jiuxian.com/2017/0110/902babce85394325b90be604fd0963854.jpg"/>
-                   <p class="secskill_name ftcolorGD">40°英国芝华士威士忌500ml+50ml品酒礼包</p>
-                   <p class="seckill_price ftcolorR">￥120</p>
-                   <p class="seckill_kill_price ftcolorGL">￥110</p>
+                   <img :src="item.proImg"/>
+                   <p class="secskill_name ftcolorGD" v-text="item.proName"></p>
+                   <p class="seckill_price ftcolorR">￥<span v-text="item.jxPrice"></span></p>
+                   <p class="seckill_kill_price ftcolorGL">￥<span v-text="item.proPrice"></span></p>
                 </a>
               </div>
             </div>
@@ -198,6 +165,8 @@
 </template>
 <script>
 import Swiper from 'swiper'
+import $ from 'jquery'
+import axios from 'axios'
 import  ComponentBlock from './ComponentBlock.vue'
 import  ComponentList from './ComponentList.vue'
 export default {
@@ -239,11 +208,23 @@ export default {
           "https://img10.jiuxian.com/bill/2018/1130/f568479589db42e68637f65159892932.jpg",
           "https://img10.jiuxian.com/bill/2018/1126/801bc886a7c94b02afa429cabc33fb9d.jpg",
 
-        ]
+        ],
+        killProList:[],
       }
     },
     mounted(){
       this.$store.state.showNavFlag = true
+      //页面滚动搜索框改变 TODO：动画待修改
+      $("#index_con").on("scroll", function() {
+        if($(this).scrollTop() > 0) {
+          $(".in_search").addClass("scrollItem");
+        } else {
+          $(".in_search").removeClass("scrollItem");
+        }
+      });
+      
+      this.getnewsList()
+     
       // 头部banner
       var in_swiper = new Swiper('#in_swiper', {
         loop:true,
@@ -259,12 +240,6 @@ export default {
         autoplay:true,
         loop:true,
       });
-      
-      // 秒杀更多
-      var in_seckill_swiper =  new Swiper('#in_seckill_swiper', {
-        slidesPerView:3,
-        spaceBetween:30
-      });
 
       // 板块一
       var in_bigAD_block_swiper1 = new Swiper('#in_bigAD_block_swiper1', {
@@ -278,10 +253,32 @@ export default {
       closeOpt:function(){
         this.showAdFlag = false
       },
+      // 秒杀更多
+      getnewsList:function(){
+        var that = this
+        axios.get('/m_v1/promote/qgajax.do?t=1543803477413&pagenum=1&tabnum=1')
+          .then(function (response) {
+            // console.log(response)
+             that.killProList = response.data.killProList
+             that.$nextTick(function(){
+                  var in_seckill_swiper =  new Swiper('#in_seckill_swiper', {
+                    slidesPerView:3,
+                    spaceBetween:30
+                  });
+             })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
     }
 }
 </script>
 <style>
+    .scrollItem{
+      background:rgba(255,0,0,.7);
+      top:0;
+    }
    .in_ad{
     width:100%;
     position: relative;
@@ -342,7 +339,8 @@ export default {
     height:.5rem;
     position: absolute;
     z-index:9999;
-    margin-top:.1rem;
+    padding:.1rem 0;
+    /*top:.7rem;*/
   }
   .web_logo{
      background: url('../assets/img/jx-sprite.png') no-repeat;

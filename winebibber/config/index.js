@@ -10,7 +10,13 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+        '/m_v1': {//这里是需要匹配的路径，如果匹配上了，则代理到目标服务器上
+            target: 'https://m.jiuxian.com', //目标服务器
+            changeOrigin: true, //开启代理
+            pathRewrite: { '^/m_v1': '/m_v1' }  //对访问路径进行替换操作
+        }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
